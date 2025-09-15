@@ -1,6 +1,31 @@
 #include <GLFW/glfw3.h>
 #include "Canvas.h"
 
+Canvas* gCanvas = nullptr;
+
+void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (!gCanvas) return;
+
+	double xpos, ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
+
+	if (button == GLFW_MOUSE_BUTTON_LEFT)
+	{
+		if (action == GLFW_PRESS)
+			gCanvas->OnMouseDown(xpos, ypos);
+		else if (action == GLFW_RELEASE)
+			gCanvas->OnMouseUp();
+	}
+}
+
+// 커서 이동 콜백
+void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	if (gCanvas)
+		gCanvas->OnMouseMove(xpos, ypos);
+}
+
 int main()
 {
 	/*
@@ -9,8 +34,9 @@ int main()
 	 *  Proc 2: Windo 생성
 	 *	Proc 3: OpenGL 컨텍스트 설정
 	 *  Proc 4: Canvas 생성
-	 *  Proc 5: 메인 루프
-	 *	Proc 6: GLFW 종료
+	 *  Proc 5: 콜백 함수 등록
+	 *  Proc 6: 메인 루프
+	 *	Proc 7: GLFW 종료
 	 */
 
 	if (!glfwInit())
@@ -28,6 +54,14 @@ int main()
 	glfwMakeContextCurrent(window);
 
 	Canvas canvas;
+	gCanvas = &canvas;
+
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);
+	glfwSetCursorPosCallback(window, CursorPosCallback);
+
+	// temp
+	Brush redBrush(5.0f, 1.0f, { 1.0f, 0.0f, 0.0f }, 1.0f);
+	canvas.SetBrush(redBrush);
 
 	while (!glfwWindowShouldClose(window))
 	{
