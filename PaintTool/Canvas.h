@@ -1,5 +1,5 @@
 #pragma once
-#include "Brush.h"
+#include "Painter.h"
 #include <vector>
 
 class Canvas
@@ -22,14 +22,14 @@ public:
 private:
 	std::vector<std::pair<float, float>> Points;
 	bool bIsDrawing = false;
-
+	
 	float bgColor[3] = { 1.0f, 1.0f, 1.0f };
 
-/** Brush */
+/** Painter */
 public:
-	void SetBrush(const Brush& brush);
-	const Brush& GetBrush() const;
+	void SetPainter(Painter* painter) { CurrentPainter = painter; }
+	Painter* GetPainter() const { return CurrentPainter; }
 
 private:
-	Brush* CurrentBrush = nullptr;
+	Painter* CurrentPainter = nullptr;
 };

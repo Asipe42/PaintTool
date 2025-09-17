@@ -17,27 +17,23 @@ void Canvas::Draw() const
 	glClearColor(bgColor[0], bgColor[1], bgColor[2], 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	if (!CurrentBrush)
+	if (!CurrentPainter)
 	{
 		return;
 	}
 
-	auto color = CurrentBrush->GetColor();
-	glColor4f(color[0], color[1], color[2], CurrentBrush->GetOpacity());
-	glPointSize(CurrentBrush->GetSize());
-
-	glBegin(GL_POINTS);
 	for (auto& p : Points)
-		glVertex2f(p.first, p.second);
-	glEnd();
+	{
+		CurrentPainter->Draw(p.first, p.second);
+	}
 }
 
 void Canvas::Clear()
 {
+	Points.clear();
 	glClearColor(bgColor[0], bgColor[1], bgColor[2], 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
-
 
 void Canvas::OnMouseDown(double x, double y)
 {
@@ -64,14 +60,4 @@ void Canvas::OnMouseMove(double x, double y)
 void Canvas::OnMouseUp()
 {
 	bIsDrawing = false;
-}
-
-void Canvas::SetBrush(const Brush& brush)
-{
-	CurrentBrush = const_cast<Brush*>(&brush);
-}
-
-const Brush& Canvas::GetBrush() const
-{
-	return *CurrentBrush;
 }

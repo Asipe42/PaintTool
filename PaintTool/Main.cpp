@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 #include "Canvas.h"
+#include "PenPainter.h"
 
 Canvas* gCanvas = nullptr;
 
@@ -19,7 +20,6 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 	}
 }
 
-// 커서 이동 콜백
 void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (gCanvas)
@@ -59,9 +59,8 @@ int main()
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 	glfwSetCursorPosCallback(window, CursorPosCallback);
 
-	// temp
-	Brush redBrush(5.0f, 1.0f, { 1.0f, 0.0f, 0.0f }, 1.0f);
-	canvas.SetBrush(redBrush);
+	PenPainter* pen = new PenPainter();
+	canvas.SetPainter(pen);
 
 	while (!glfwWindowShouldClose(window))
 	{

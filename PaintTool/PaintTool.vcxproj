@@ -160,13 +160,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Brush.cpp" />
+    <ClCompile Include="BrushPainter.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Painter.cpp" />
+    <ClCompile Include="PenPainter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Brush.h" />
+    <ClInclude Include="BrushPainter.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="Painter.h" />
+    <ClInclude Include="PenPainter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

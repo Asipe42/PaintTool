@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Painter">
+      <UniqueIdentifier>{c2a2c176-796a-4ef5-ac7c-4abc55d655d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Painter">
+      <UniqueIdentifier>{f93a8ec6-2bb4-4ee7-8fe3-7e2b72b6fa6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -21,16 +27,31 @@
     <ClCompile Include="Canvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Brush.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="PenPainter.cpp">
+      <Filter>Source Files\Painter</Filter>
+    </ClCompile>
+    <ClCompile Include="Painter.cpp">
+      <Filter>Source Files\Painter</Filter>
+    </ClCompile>
+    <ClCompile Include="BrushPainter.cpp">
+      <Filter>Source Files\Painter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Brush.h">
+    <ClInclude Include="Color.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BrushPainter.h">
+      <Filter>Header Files\Painter</Filter>
+    </ClInclude>
+    <ClInclude Include="Painter.h">
+      <Filter>Header Files\Painter</Filter>
+    </ClInclude>
+    <ClInclude Include="PenPainter.h">
+      <Filter>Header Files\Painter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
