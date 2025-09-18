@@ -1,6 +1,7 @@
 #include <GLFW/glfw3.h>
 #include "Canvas.h"
 #include "PenPainter.h"
+#include "BrushPainter.h"
 
 Canvas* gCanvas = nullptr;
 
@@ -44,7 +45,7 @@ int main()
 		return -1;
 	}
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Paint Tool", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1024, 1024, "Paint Tool", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -59,9 +60,9 @@ int main()
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 	glfwSetCursorPosCallback(window, CursorPosCallback);
 
-	PenPainter* pen = new PenPainter();
-	pen->SetSize(5.0f);
-	canvas.SetPainter(pen);
+	BrushPainter* brush = new BrushPainter();
+	brush->SetSize(0.1f);
+	canvas.SetPainter(brush);
 
 	while (!glfwWindowShouldClose(window))
 	{
