@@ -60,6 +60,7 @@ int main()
 	glfwSetCursorPosCallback(window, CursorPosCallback);
 
 	PenPainter* pen = new PenPainter();
+	pen->SetSize(5.0f);
 	canvas.SetPainter(pen);
 
 	while (!glfwWindowShouldClose(window))
