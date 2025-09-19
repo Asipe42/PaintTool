@@ -34,6 +34,7 @@ int main()
 	 *	Proc 1: GLFW 초기화
 	 *  Proc 2: Windo 생성
 	 *	Proc 3: OpenGL 컨텍스트 설정
+	 *	Proc 4: 투영 행렬 설정
 	 *  Proc 4: Canvas 생성
 	 *  Proc 5: 콜백 함수 등록
 	 *  Proc 6: 메인 루프
@@ -45,7 +46,8 @@ int main()
 		return -1;
 	}
 
-	GLFWwindow* window = glfwCreateWindow(1024, 1024, "Paint Tool", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1920, 1080, "Paint Tool", NULL, NULL);
+
 	if (!window)
 	{
 		glfwTerminate();
@@ -53,7 +55,23 @@ int main()
 	}
 
 	glfwMakeContextCurrent(window);
+	
+	/*
+	 * 투영 행렬 설정
+	 *	- 화면 좌표계를 사용
+	 *	- (0,0) at bottom-left
+	 *	- (width,height) at top-right
+	 */
+	
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, width, 0, height, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
 	Canvas canvas;
 	gCanvas = &canvas;
 
@@ -61,7 +79,7 @@ int main()
 	glfwSetCursorPosCallback(window, CursorPosCallback);
 
 	BrushPainter* brush = new BrushPainter();
-	brush->SetSize(0.1f);
+	brush->SetSize(10.f);
 	canvas.SetPainter(brush);
 
 	while (!glfwWindowShouldClose(window))

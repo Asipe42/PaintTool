@@ -51,10 +51,7 @@ void Canvas::OnMouseMove(double x, double y)
 	int width, height;
 	glfwGetWindowSize(glfwGetCurrentContext(), &width, &height);
 
-	float ndcX = (x / width) * 2.0f - 1.0f;  // -1.0 ~ 1.0
-	float ndcY = 1.0f - (y / height) * 2.0f; // -1.0 ~ 1.0
-
-	Points.push_back({ ndcX, ndcY });
+	Points.push_back({ (float)x, (float)(height - y) });
 }
 
 void Canvas::OnMouseUp()
