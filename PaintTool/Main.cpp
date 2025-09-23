@@ -11,7 +11,18 @@ Canvas* gCanvas = nullptr;
 
 void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-	if (!gCanvas) return;
+	ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.WantCaptureMouse)
+	{
+		return;
+	}
+
+	if (!gCanvas)
+	{
+		return;
+	}
 
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
@@ -38,11 +49,12 @@ int main()
 	 *	Proc 1: GLFW 초기화
 	 *  Proc 2: Windo 생성
 	 *	Proc 3: OpenGL 컨텍스트 설정
-	 *	Proc 4: 투영 행렬 설정
-	 *  Proc 4: Canvas 생성
-	 *  Proc 5: 콜백 함수 등록
-	 *  Proc 6: 메인 루프
-	 *	Proc 7: GLFW 종료
+	 *	Proc 4: ImGui 초기화
+	 *	Proc 5: 투영 행렬 설정
+	 *  Proc 6: Canvas 생성
+	 *  Proc 7: 콜백 함수 등록
+	 *  Proc 8: 메인 루프
+	 *	Proc 9: GLFW 종료
 	 */
 
 	if (!glfwInit())
@@ -59,7 +71,15 @@ int main()
 	}
 
 	glfwMakeContextCurrent(window);
-	
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 130");
+
 	/*
 	 * 투영 행렬 설정
 	 *	- 화면 좌표계를 사용
@@ -94,11 +114,37 @@ int main()
 		 *  Proc 2: 화면 갱신
 		 *  Proc 3: 이벤트 처리
 		 */
+		glfwPollEvents();
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+
+		if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+			ImGui::OpenPopup("Context Menu");
+
+		if (ImGui::BeginPopup("Context Menu"))
+		{
+			if (ImGui::BeginMenu("Color"))
+			{
+				ImGui::EndMenu();
+			}
+			ImGui::EndPopup();
+		}
 
 		canvas.Draw();
+
+		ImGui::Render();
+		glViewport(0, 0, width, height);
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		glfwSwapBuffers(window);
-		glfwPollEvents();
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	glfwTerminate();
 
